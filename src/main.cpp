@@ -20,10 +20,12 @@
 #define HREF_GPIO_NUM     23
 #define PCLK_GPIO_NUM     22
 
-#define firebase_url "flutter-56640-default-rtdb.firebaseio.com/"
-#define firebase_token "AIzaSyAYm5qa5xfh-mD_9QtCirFYbbH2FGdjlVQ"
+#define ButtonPin 12
 
-#define WiFi_SSID "LGWiFi_170E"
+#define firebase_url "fir-hacker-6932a-default-rtdb.firebaseio.com"
+#define firebase_token "AIzaSyCeWbGoQF4c5Nb_7BomALnuxVWLt9NS5Qo"
+
+#define WiFi_SSID "LG_WiFi_170E"
 #define WiFi_PASSWORD "3001001256"
 
 FirebaseData fbdo;
@@ -108,8 +110,15 @@ void setup(){
 
   Firebase.begin(&config_firebase,&auth);
   Firebase.reconnectWiFi(true);
+
+  pinMode(ButtonPin, INPUT_PULLUP);
+
+  get_photo();
 }
 
 void loop(){
-  get_photo();
+  if (digitalRead(ButtonPin) == LOW) {
+    delay(1000);
+    ESP.restart();
+  }
 }
